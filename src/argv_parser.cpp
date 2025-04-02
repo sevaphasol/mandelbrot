@@ -4,38 +4,38 @@
 #include <string.h>
 #include "argv_parser.h"
 
-//================================================================================
+//==============================================================================
 
 inline void print_usage()
 {
-    printf(
-        "Usage: bin/out [options]\n"
-           "Options:\n"
-           "  --help, -h       Print this message.\n"
-           "  --stats, -s      Show stats in graphic mode.\n"
-           "  --testing, -t    Disable graphics. Run testing mode.\n"
-           "  --plot, -p       Turn on plotting a graph.\n"
-           "  --Pulsation, -P  Turn on pulsation of image."
-           "  --mode=<number>  Set programm mode.\n"
-           "                   0 — GRAPHICS\n"
-           "                   1 — TESTING\n"
-           "                   2 — BENCHMARK\n"
-           "  --alpha<number>  Set alpha (transparency of pixels).\n"
-           "  --runs=<number>  Set number of runs in testing mode.\n"
-           "  --calc=<number>  Set mode of calculating.\n"
-           "                   0 — NORMAL\n"
-           "                   1 — SSE\n"
-           "                   2 — AVX2\n"
-           "                   3 — AVX-512\n");
+    puts("Usage: bin/out [options]\n"
+         "Options:\n"
+         "  --help, -h       Print this message.\n"
+         "  --stats, -s      Show stats in graphic mode.\n"
+         "  --testing, -t    Disable graphics. Run testing mode.\n"
+         "  --plot, -p       Turn on plotting a graph.\n"
+         "  --Pulsation, -P  Turn on pulsation of image."
+         "  --mode=<number>  Set programm mode.\n"
+         "                   0 — GRAPHICS\n"
+         "                   1 — TESTING\n"
+         "                   2 — BENCHMARK\n"
+         "  --alpha<number>  Set alpha (transparency of pixels).\n"
+         "  --runs=<number>  Set number of runs in testing mode.\n"
+         "  --calc=<number>  Set mode of calculating.\n"
+         "                   0 — NORMAL\n"
+         "                   1 — SSE\n"
+         "                   2 — AVX2\n"
+         "                   3 — AVX-512\n");
 }
 
-//================================================================================
+//==============================================================================
 
 ap_status_t parse_argv(int argc, char *argv[], ap_ctx_t* ctx)
 {
-    int opt = 0, option_index = 0;
-
-    option long_options[] = {
+    int opt    = 0;
+    int optind = 0;
+    //--------------------------------------------------------------------------
+    option l_opts[] = {
         {"help",      no_argument,       NULL, 'h'},
         {"stats",     no_argument,       NULL, 's'},
         {"plot",      no_argument,       NULL, 'p'},
@@ -49,28 +49,55 @@ ap_status_t parse_argv(int argc, char *argv[], ap_ctx_t* ctx)
         {"calc",      required_argument, NULL, 'c'},
         {"n_points",  required_argument, NULL, 'n'}
     };
-
-    while ((opt = getopt_long(argc, argv, "hspPtgbm:a:r:c:n:",
-                              long_options, &option_index)) != -1)
-    {
-        switch (opt)
-        {
-            case 'h': print_usage();                            break;
-            case 's': ctx->stats     =            true;         break;
-            case 'p': ctx->plot      =            true;         break;
-            case 'P': ctx->pulsation =            true;         break;
-            case 'g': ctx->mode      =            0;            break;
-            case 't': ctx->mode      =            1;            break;
-            case 'b': ctx->mode      =            2;            break;
-            case 'm': ctx->mode      =            atoi(optarg); break;
-            case 'a': ctx->alpha     = (uint8_t ) atoi(optarg); break;
-            case 'r': ctx->runs      =            atoi(optarg); break;
-            case 'c': ctx->calc      =            atoi(optarg); break;
-            case 'n': ctx->n_points  =            atoi(optarg); break;
-            case '?': print_usage();                            return AP_ERROR;
-            default:  print_usage();                            return AP_ERROR;
+    //--------------------------------------------------------------------------
+    const char* s_opts = "hspPtgbm:a:r:c:n:";
+    //--------------------------------------------------------------------------
+    while ((opt = getopt_long(argc, argv, s_opts, l_opts, &optind)) != -1) {
+        switch (opt) {
+            case 'h':
+                print_usage();
+                break;
+            case 's':
+                ctx->stats = true;
+                break;
+            case 'p':
+                ctx->plot = true;
+                break;
+            case 'P':
+                ctx->pulsation = true;
+                break;
+            case 'g':
+                ctx->mode = 0;
+                break;
+            case 't':
+                ctx->mode = 1;
+                break;
+            case 'b':
+                ctx->mode = 2;
+                break;
+            case 'm':
+                ctx->mode = atoi(optarg);
+                break;
+            case 'a':
+                ctx->alpha = (uint8_t )atoi(optarg);
+                break;
+            case 'r':
+                ctx->runs = atoi(optarg);
+                break;
+            case 'c':
+                ctx->calc = atoi(optarg);
+                break;
+            case 'n':
+                ctx->n_points = atoi(optarg);
+                break;
+            case '?':
+                print_usage();
+                return AP_ERROR;
+            default:
+                print_usage();
+                return AP_ERROR;
         }
     }
-
+    //--------------------------------------------------------------------------
     return AP_SUCCESS;
 }

@@ -1,13 +1,13 @@
 #ifndef MANDELBROT_H__
 #define MANDELBROT_H__
-
+//———————————————————————————————————————————————————————————————————————————————
 #include <SFML/Graphics.hpp>
 #include <inttypes.h>
 #include <immintrin.h>
 #include <xmmintrin.h>
 #include <math.h>
 #include "argv_parser.h"
-
+//———————————————————————————————————————————————————————————————————————————————
 #define WINDOW_NAME     "MANDELBROT"
 
 #define AVG_FREQUENCY    3792
@@ -36,13 +36,13 @@
 
 #define START_TIMER      1
 #define END_TIMER        0
-
+//———————————————————————————————————————————————————————————————————————————————
 enum status_t
 {
     ERROR   = 0,
     SUCCESS = 1,
 };
-
+//———————————————————————————————————————————————————————————————————————————————
 struct context_t
 {
     ap_ctx_t argv;
@@ -63,7 +63,7 @@ struct context_t
         sprite.setTexture(texture);
     }
 };
-
+//———————————————————————————————————————————————————————————————————————————————
 struct test_ctx_t
 {
     uint32_t n_points;
@@ -74,7 +74,7 @@ struct test_ctx_t
     double   slope_error;
     double   intercept_error;
 };
-
+//———————————————————————————————————————————————————————————————————————————————
 status_t   ctx_ctor                  (context_t* ctx);
 status_t   ctx_update                (context_t* ctx);
 status_t   ctx_dtor                  (context_t* ctx);
@@ -101,5 +101,5 @@ status_t   calc_least_squares        (test_ctx_t* ctx);
 status_t   graphic_plot              (test_ctx_t* ctx);
 
 status_t   show_progress_bar         (uint32_t total, uint32_t current);
-
+//———————————————————————————————————————————————————————————————————————————————
 #endif // MANDELBROT_H__
