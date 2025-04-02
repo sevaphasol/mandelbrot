@@ -100,7 +100,7 @@ status_t show_stats(bool mode)
     if (time > (uint64_t) 1e8)
         n_spikes++;
 
-    printf("\r| fps = %05.1f | time = %05.1f ms | freq = %u MHz | frames = %u | spikes(AVX2) = %u |",
+    printf("\r| fps = %05.1f | time = %05.1f ms | freq = %u MHz | frames = %u | spikes = %u |",
             1.0 / ((double) time / 1e9), (double) time / 1e6, freq, n_frames, n_spikes);
     fflush(stdout);
 
