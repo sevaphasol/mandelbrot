@@ -12,10 +12,13 @@ enum ap_status_t
 struct ap_ctx_t
 {
     bool      stats;
-    bool      testing;
     bool      plot;
-    uint32_t  runs;
+    bool      pulsation;
     uint32_t  mode;
+    uint8_t   alpha;
+    uint32_t  runs;
+    uint32_t  calc;
+    uint32_t  n_points;
 };
 
 ap_status_t parse_argv(int argc, char *argv[], ap_ctx_t* ctx);
