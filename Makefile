@@ -11,7 +11,7 @@ SOURCES_DIR = src
 OBJECTS_DIR = obj
 BUILD_DIR   = bin
 
-EXECUTABLE 		= out
+EXECUTABLE 		= mandelbrot
 EXECUTABLE_PATH = $(BUILD_DIR)/$(EXECUTABLE)
 
 SOURCE_FILES = $(wildcard $(SOURCES_DIR)/*.cpp)
