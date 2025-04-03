@@ -1,7 +1,5 @@
 #include <immintrin.h>
-#include "mandelbrot.h"
-
-#include <immintrin.h>
+#include <xmmintrin.h>
 #include "mandelbrot.h"
 
 //================================================================================
@@ -137,10 +135,10 @@ status_t compute_mandelbrot_avx2(context_t* ctx, uint32_t runs)
 
     __m256d y0_start = _mm256_set1_pd(ctx->center_y - scale * 0.5f);
     __m256d x0_start = _mm256_add_pd(_mm256_set1_pd(ctx->center_x - scale * 0.5f),
-                                    _mm256_set_pd (single_dx * 4.0f,
-                                                   single_dx * 2.0f,
-                                                   single_dx,
-                                                   0.0f));
+                                     _mm256_set_pd (single_dx * 4.0f,
+                                                    single_dx * 2.0f,
+                                                    single_dx,
+                                                    0.0f));
 
     __m256d  max_r2 = _mm256_set1_pd(MAX_RADIUS * MAX_RADIUS);
     __m256i mask   = _mm256_set1_epi64x(1);

@@ -82,20 +82,25 @@ status_t graphic_mode(context_t* ctx)
 
 status_t show_stats(bool mode)
 {
-    static timespec time_start  = {};
-    static timespec time_end    = {};
+    // static timespec time_start  = {};
+    // static timespec time_end    = {};
+    static uint64_t cycles_start = 0;
+    static uint64_t cycles_end = 0;
     //-------------------------------------------------------------------------
     if (mode == START_TIMER) {
-        clock_gettime(CLOCK_MONOTONIC, &time_start);
+        // clock_gettime(CLOCK_MONOTONIC, &time_start);
+        cycles_start = _rdtsc();
         return SUCCESS;
     }
     //-------------------------------------------------------------------------
-    clock_gettime(CLOCK_MONOTONIC, &time_end);
+    // clock_gettime(CLOCK_MONOTONIC, &time_end);
+    cycles_end = _rdtsc();
     //-------------------------------------------------------------------------
-    double elapsed_time = (double)(time_end.tv_sec  - time_start.tv_sec) +
-                          (double)(time_end.tv_nsec - time_start.tv_nsec)*1e-9;
+    // double elapsed_time = (double)(time_end.tv_sec  - time_start.tv_sec) +
+    //                       (double)(time_end.tv_nsec - time_start.tv_nsec)*1e-9;
     //-------------------------------------------------------------------------
-    printf("\rfps = %05.1f", 1.0 / elapsed_time);
+    // printf("\rfps = %05.1f", 1.0 / elapsed_time);
+    printf("\r%.2f⋅10⁹", (double)(cycles_end - cycles_start) / 1000000000);
     fflush(stdout);
     //-------------------------------------------------------------------------
     return SUCCESS;
@@ -214,7 +219,7 @@ status_t compute_pixel_colors(context_t* ctx)
     if (ctx->argv.pulsation) {
         uint32_t elapsed_time = clock.getElapsedTime().asMilliseconds();
         //---------------------------------------------------------------------
-        uint16_t param = (uint16_t)(elapsed_time / 10) % 512;
+        uint16_t param = (uint16_t)(elapsed_time * 0.1) % 512;
         //---------------------------------------------------------------------
         if (param < 256) {
             alpha = (uint8_t) param;
@@ -248,11 +253,11 @@ sf::Uint32 get_color(uint64_t iter, uint8_t alpha)
     double t = (double)iter / MAX_ITER;
     double r = (t + 1/3 + 0.05*((double) (iter%2))) * 3.14;
     double g = (t + 7/3 + 0.01*((double) (iter%2))) * 3.14;
-    double b = (t + 5/3 +    0*((double) (iter%2))) * 3.14;
+    double b = (t + 5/3 + 0.00*((double) (iter%2))) * 3.14;
     //-------------------------------------------------------------------------
-    return sf::Color((uint8_t) (255 * (r - r*r*r/6)),
-                     (uint8_t) (255 * (g - g*g*g/6)),
-                     (uint8_t) (255 * (b - b*b*b/6)),
+    return sf::Color((uint8_t)(255 * (r - r*r*r/6)),
+                     (uint8_t)(255 * (g - g*g*g/6)),
+                     (uint8_t)(255 * (b - b*b*b/6)),
                      alpha).toInteger();
 }
 
@@ -309,11 +314,13 @@ status_t testing_mode(context_t* ctx)
     calc_least_squares(&test_ctx);
     //-------------------------------------------------------------------------
     if (ctx->argv.plot) {
-        graphic_plot(&test_ctx);
+        graphic_plot(&test_ctx, ctx->argv.calc);
     }
     //-------------------------------------------------------------------------
-    printf("Total: (%.1f ± %.1f) cycles\n", test_ctx.slope,
-                                            test_ctx.slope_error);
+    printf("slope     = (%.1f ± %.1f)⋅10⁶ cycles\n",
+           test_ctx.slope     / 1000000, test_ctx.slope_error     / 1000000);
+    printf("intercept = (%.1f ± %.1f)⋅10⁶ cycles\n",
+           test_ctx.intercept / 1000000, test_ctx.intercept_error / 1000000);
     //-------------------------------------------------------------------------
     free(test_ctx.x);
     //-------------------------------------------------------------------------
@@ -368,7 +375,7 @@ status_t calc_least_squares(test_ctx_t* ctx)
 
 //=============================================================================
 
-status_t graphic_plot(test_ctx_t* ctx)
+status_t graphic_plot(test_ctx_t* ctx, uint32_t mode)
 {
     FILE *gnuplot = popen("gnuplot -persistent", "w");
     if (!gnuplot) {
@@ -376,14 +383,23 @@ status_t graphic_plot(test_ctx_t* ctx)
         return ERROR;
     }
     //-------------------------------------------------------------------------
-    fputs("set title 'Naming is developing'\n"
-          "set xlabel 'Repeats'\n"
-          "set ylabel 'Cycles'\n"
-          "set grid\n"
-          "set key left top\n"
-          "plot '-' with points pointtype 7 pointsize 1.5"
-          " title 'Data Points', '-' with lines linewidth 2"
-          " title 'Regression Line'\n", gnuplot);
+    switch (mode) {
+        case NORMAL:
+            set_gnuplot_settings(ctx, gnuplot, "No optimization");
+            break;
+        case SSE:
+            set_gnuplot_settings(ctx, gnuplot, "SSE optimization");
+            break;
+        case AVX2:
+            set_gnuplot_settings(ctx, gnuplot, "AVX2 optimization");
+            break;
+        case AVX512:
+            set_gnuplot_settings(ctx, gnuplot, "AVX512 optimization");
+            break;
+        default:
+            return ERROR;
+    }
+    //-------------------------------------------------------------------------
     //-------------------------------------------------------------------------
     uint32_t n_points = ctx->n_points;
     //-------------------------------------------------------------------------
@@ -391,14 +407,32 @@ status_t graphic_plot(test_ctx_t* ctx)
         fprintf(gnuplot, "%f %f\n", ctx->x[i], ctx->y[i]);
     }
     //-------------------------------------------------------------------------
-    fprintf(gnuplot, "e\n %f %f\n",
-            0.0, ctx->intercept);
-    fprintf(gnuplot, " %f %f\n e\n",
-            ctx->x[n_points - 1],
+    fprintf(gnuplot, "e\n %f %f\n", 0.0, ctx->intercept);
+    fprintf(gnuplot, "%f %f\n e\n", ctx->x[n_points - 1],
             ctx->slope * ctx->x[n_points - 1] + ctx->intercept);
     //-------------------------------------------------------------------------
     pclose(gnuplot);
     //-------------------------------------------------------------------------
+    return SUCCESS;
+}
+
+//===============================================================================
+
+status_t set_gnuplot_settings(test_ctx_t* ctx, FILE* gnuplot, const char* plot_name)
+{
+    fprintf(gnuplot,
+            "set title '%s'\n"
+            "set xlabel 'Repeats'\n"
+            "set ylabel 'Cycles'\n"
+            "set grid\n"
+            "set key left top\n"
+            "set label 1 sprintf('slope = (%.1f ± %.1f)⋅10⁶')"
+            " at graph 0.05, 0.9 font ',12'\n"
+            "plot '-' with points pointtype 7 pointsize 1.5 notitle, "
+            "'-' with lines linewidth 2 notitle\n",
+            plot_name,
+            ctx->slope / 1000000, ctx->slope_error / 1000000);
+
     return SUCCESS;
 }
 

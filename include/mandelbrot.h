@@ -98,8 +98,9 @@ status_t   handle_events             (context_t* ctx,
 status_t   show_stats                (bool mode);
 
 status_t   calc_least_squares        (test_ctx_t* ctx);
-status_t   graphic_plot              (test_ctx_t* ctx);
-
+status_t   graphic_plot              (test_ctx_t* ctx, uint32_t mode);
+status_t   set_gnuplot_settings      (test_ctx_t* ctx,
+                                      FILE* gnuplot, const char* plot_name);
 status_t   show_progress_bar         (uint32_t total, uint32_t current);
 //———————————————————————————————————————————————————————————————————————————————
 #endif // MANDELBROT_H__
