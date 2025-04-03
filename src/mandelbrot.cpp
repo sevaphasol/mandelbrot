@@ -82,24 +82,16 @@ status_t graphic_mode(context_t* ctx)
 
 status_t show_stats(bool mode)
 {
-    // static timespec time_start  = {};
-    // static timespec time_end    = {};
     static uint64_t cycles_start = 0;
     static uint64_t cycles_end = 0;
     //-------------------------------------------------------------------------
     if (mode == START_TIMER) {
-        // clock_gettime(CLOCK_MONOTONIC, &time_start);
         cycles_start = _rdtsc();
         return SUCCESS;
     }
     //-------------------------------------------------------------------------
-    // clock_gettime(CLOCK_MONOTONIC, &time_end);
     cycles_end = _rdtsc();
     //-------------------------------------------------------------------------
-    // double elapsed_time = (double)(time_end.tv_sec  - time_start.tv_sec) +
-    //                       (double)(time_end.tv_nsec - time_start.tv_nsec)*1e-9;
-    //-------------------------------------------------------------------------
-    // printf("\rfps = %05.1f", 1.0 / elapsed_time);
     printf("\r%.2f⋅10⁹", (double)(cycles_end - cycles_start) / 1000000000);
     fflush(stdout);
     //-------------------------------------------------------------------------
