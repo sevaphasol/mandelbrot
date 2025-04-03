@@ -288,7 +288,7 @@ status_t testing_mode(context_t* ctx)
     //-------------------------------------------------------------------------
     test_ctx.n_points = n_points;
     //-------------------------------------------------------------------------
-    test_ctx.x = (double*)calloc(2 * n_points, sizeof(double));
+    test_ctx.x = (uint64_t*)calloc(2 * n_points, sizeof(uint64_t));
     test_ctx.y = test_ctx.x + n_points;
     //-------------------------------------------------------------------------
     for (uint32_t point = 1; point < n_points + 1; point++) {
@@ -297,8 +297,8 @@ status_t testing_mode(context_t* ctx)
         volatile status_t dummy = compute_func(ctx, point * runs);
         uint64_t cycle_end = _rdtsc();
         //---------------------------------------------------------------------
-        test_ctx.x[point - 1] = (double)(point * runs);
-        test_ctx.y[point - 1] = (double)(cycle_end - cycle_start);
+        test_ctx.x[point - 1] = (point * runs);
+        test_ctx.y[point - 1] = (cycle_end - cycle_start);
         //---------------------------------------------------------------------
         show_progress_bar(n_points, point);
     }
@@ -308,6 +308,8 @@ status_t testing_mode(context_t* ctx)
     if (ctx->argv.plot) {
         graphic_plot(&test_ctx, ctx->argv.calc);
     }
+    //-------------------------------------------------------------------------
+    make_table(&test_ctx, ctx->argv.calc);
     //-------------------------------------------------------------------------
     printf("slope     = (%.1f ± %.1f)⋅10⁶ cycles\n",
            test_ctx.slope     / 1000000, test_ctx.slope_error     / 1000000);
@@ -323,8 +325,8 @@ status_t testing_mode(context_t* ctx)
 
 status_t calc_least_squares(test_ctx_t* ctx)
 {
-    double* x = ctx->x;
-    double* y = ctx->y;
+    uint64_t* x = ctx->x;
+    uint64_t* y = ctx->y;
     //-------------------------------------------------------------------------
     double av_x  = 0.0;
     double av_y  = 0.0;
@@ -335,11 +337,11 @@ status_t calc_least_squares(test_ctx_t* ctx)
     uint32_t n_points = ctx->n_points;
     //-------------------------------------------------------------------------
     for (uint32_t i = 0; i < n_points; i++) {
-        av_x  += x[i];
-        av_y  += y[i];
-        av_xy += x[i] * y[i];
-        av_x2 += x[i] * x[i];
-        av_y2 += y[i] * y[i];
+        av_x  += (double)x[i];
+        av_y  += (double)y[i];
+        av_xy += (double)x[i] * (double)y[i];
+        av_x2 += (double)x[i] * (double)x[i];
+        av_y2 += (double)y[i] * (double)y[i];
     }
     //-------------------------------------------------------------------------
     av_x  /= n_points;
@@ -367,9 +369,50 @@ status_t calc_least_squares(test_ctx_t* ctx)
 
 //=============================================================================
 
+status_t make_table(test_ctx_t* ctx, uint32_t mode)
+{
+    FILE* table = nullptr;
+    switch (mode) {
+        case NORMAL:
+            table = fopen("no-optimization-table.txt", "w");
+            break;
+        case SSE:
+            table = fopen("sse-table.txt", "w");
+            break;
+        case AVX2:
+            table = fopen("avx2-table.txt", "w");
+            break;
+        case AVX512:
+            table = fopen("avx512-table.txt", "w");
+            break;
+        default:
+            return ERROR;
+    }
+    //-------------------------------------------------------------------------
+    if (!table) {
+        fprintf(stderr, "Error: Unable to open table file.\n");
+        return ERROR;
+    }
+    //-------------------------------------------------------------------------
+    uint32_t n_points = ctx->n_points;
+    //-------------------------------------------------------------------------
+    fputs("<table>\n\t<tr><th>Repeats</th><th>Cycles</th></tr>\n", table);
+    //-------------------------------------------------------------------------
+    for (uint32_t i = 0; i < n_points; i++) {
+        fprintf(table, "\t<tr><th>%ld</th><th>%.1f⋅10⁶</th></tr>\n",
+                ctx->x[i], (double) ctx->y[i] / 1000000);
+    }
+    //-------------------------------------------------------------------------
+    fputs("</table>\n", table);
+    //-------------------------------------------------------------------------
+    return SUCCESS;
+}
+
+//=============================================================================
+
 status_t graphic_plot(test_ctx_t* ctx, uint32_t mode)
 {
-    FILE *gnuplot = popen("gnuplot -persistent", "w");
+    FILE* gnuplot = popen("gnuplot -persistent", "w");
     if (!gnuplot) {
         fprintf(stderr, "Error: Unable to open Gnuplot.\n");
         return ERROR;
@@ -392,16 +435,15 @@ status_t graphic_plot(test_ctx_t* ctx, uint32_t mode)
             return ERROR;
     }
     //-------------------------------------------------------------------------
-    //-------------------------------------------------------------------------
     uint32_t n_points = ctx->n_points;
     //-------------------------------------------------------------------------
     for (uint32_t i = 0; i < n_points; i++) {
-        fprintf(gnuplot, "%f %f\n", ctx->x[i], ctx->y[i]);
+        fprintf(gnuplot, "%ld %ld\n", ctx->x[i], ctx->y[i]);
     }
     //-------------------------------------------------------------------------
     fprintf(gnuplot, "e\n %f %f\n", 0.0, ctx->intercept);
-    fprintf(gnuplot, "%f %f\n e\n", ctx->x[n_points - 1],
-            ctx->slope * ctx->x[n_points - 1] + ctx->intercept);
+    fprintf(gnuplot, "%f %f\n e\n", (double)ctx->x[n_points - 1],
+            ctx->slope * (double)ctx->x[n_points - 1] + ctx->intercept);
     //-------------------------------------------------------------------------
     pclose(gnuplot);
     //-------------------------------------------------------------------------
@@ -418,7 +460,7 @@ status_t set_gnuplot_settings(test_ctx_t* ctx, FILE* gnuplot, const char* plot_n
             "set ylabel 'Cycles'\n"
             "set grid\n"
             "set key left top\n"
-            "set label 1 sprintf('slope = (%.1f ± %.1f)⋅10⁶')"
+            "set label 1 sprintf('slope = (%.1f ± %.1f)⋅10⁶ cycles')"
             " at graph 0.05, 0.9 font ',12'\n"
             "plot '-' with points pointtype 7 pointsize 1.5 notitle, "
             "'-' with lines linewidth 2 notitle\n",

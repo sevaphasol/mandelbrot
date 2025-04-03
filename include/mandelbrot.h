@@ -66,13 +66,13 @@ struct context_t
 //———————————————————————————————————————————————————————————————————————————————
 struct test_ctx_t
 {
-    uint32_t n_points;
-    double*  x;
-    double*  y;
-    double   slope;
-    double   intercept;
-    double   slope_error;
-    double   intercept_error;
+    uint32_t  n_points;
+    uint64_t* x;
+    uint64_t* y;
+    double    slope;
+    double    intercept;
+    double    slope_error;
+    double    intercept_error;
 };
 //———————————————————————————————————————————————————————————————————————————————
 status_t   ctx_ctor                  (context_t* ctx);
@@ -101,6 +101,7 @@ status_t   calc_least_squares        (test_ctx_t* ctx);
 status_t   graphic_plot              (test_ctx_t* ctx, uint32_t mode);
 status_t   set_gnuplot_settings      (test_ctx_t* ctx,
                                       FILE* gnuplot, const char* plot_name);
+status_t   make_table                (test_ctx_t* ctx, uint32_t mode);
 status_t   show_progress_bar         (uint32_t total, uint32_t current);
 //———————————————————————————————————————————————————————————————————————————————
 #endif // MANDELBROT_H__

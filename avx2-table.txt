@@ -1,0 +1,13 @@
+<table>
+	<tr><th>Repeats</th><th>Cycles</th></tr>
+	<tr><th>10</th><th>1066.7⋅10⁶</th></tr>
+	<tr><th>20</th><th>2095.9⋅10⁶</th></tr>
+	<tr><th>30</th><th>3141.4⋅10⁶</th></tr>
+	<tr><th>40</th><th>4190.9⋅10⁶</th></tr>
+	<tr><th>50</th><th>5239.3⋅10⁶</th></tr>
+	<tr><th>60</th><th>6292.0⋅10⁶</th></tr>
+	<tr><th>70</th><th>7316.2⋅10⁶</th></tr>
+	<tr><th>80</th><th>8361.0⋅10⁶</th></tr>
+	<tr><th>90</th><th>9422.8⋅10⁶</th></tr>
+	<tr><th>100</th><th>10481.7⋅10⁶</th></tr>
+</table>

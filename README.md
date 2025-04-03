@@ -8,8 +8,6 @@
 3) [Замерить количество тактов, требуемое для вычислений в различных реализациях.](#результаты-измерений)
 
 В качестве программы для тестирования оптимизаций было предложено вычисление и визуализация множества Мандельброта.
-Эта достаточно вычеслительно ёмкая задача, поэтому она является классической для тестирования
-чего-либо.
 
 #### Реализации
 1. **NORMAL** – базовая реализация без оптимизаций.
@@ -85,7 +83,7 @@ sudo cpupower frequency-set -u <frequency> # верхний предел
 taskset -c <core number>
 ```
 
-Условия, в которых измерял я
+Условия, в которых проводились измерения
 1) Тактовая частота процессора фиксирована и равна 3.2 GHz.
 2) Различные оптимизации запускаются на одном и том же ядре C0.
 
@@ -99,10 +97,89 @@ taskset -c <core number>
 
 ### Результаты измерений
 
-![NORMAL](https://github.com/user-attachments/assets/39800634-fda1-4e81-a3a0-ea6666cd32cf)
-![SSE](https://github.com/user-attachments/assets/2c8ca387-487c-49fe-b0a4-0146cfc41bec)
-![AVX2](https://github.com/user-attachments/assets/43a9549a-4243-4d89-aee5-abe4b76a7e73)
-![AVX512](https://github.com/user-attachments/assets/f0af3030-2c5b-4b88-8fb2-99c69e5e554d)
+<table>
+    <tr>
+        <td><img src="https://github.com/user-attachments/assets/ecac6db8-5b0f-4494-af4a-1acc667c5903"/></td>
+        <td>
+            <table>
+            	<tr><th>Repeats</th><th>Cycles</th></tr>
+            	<tr><th>10</th><th>3862.9⋅10⁶</th></tr>
+            	<tr><th>20</th><th>7688.8⋅10⁶</th></tr>
+            	<tr><th>30</th><th>11491.9⋅10⁶</th></tr>
+            	<tr><th>40</th><th>15373.4⋅10⁶</th></tr>
+            	<tr><th>50</th><th>19273.7⋅10⁶</th></tr>
+            	<tr><th>60</th><th>23025.0⋅10⁶</th></tr>
+            	<tr><th>70</th><th>26952.4⋅10⁶</th></tr>
+            	<tr><th>80</th><th>30792.5⋅10⁶</th></tr>
+            	<tr><th>90</th><th>34677.4⋅10⁶</th></tr>
+            	<tr><th>100</th><th>38366.3⋅10⁶</th></tr>
+            </table>
+        </td>
+    </tr>
+</table>
+
+<table>
+    <tr>
+        <td><img src="https://github.com/user-attachments/assets/aa2c9031-9c02-4c38-939b-c3ed2c15c011"/></td>
+        <td>
+            <table>
+            	<tr><th>Repeats</th><th>Cycles</th></tr>
+            	<tr><th>10</th><th>2044.1⋅10⁶</th></tr>
+            	<tr><th>20</th><th>4058.9⋅10⁶</th></tr>
+            	<tr><th>30</th><th>6099.7⋅10⁶</th></tr>
+            	<tr><th>40</th><th>8184.1⋅10⁶</th></tr>
+            	<tr><th>50</th><th>10236.7⋅10⁶</th></tr>
+            	<tr><th>60</th><th>12252.6⋅10⁶</th></tr>
+            	<tr><th>70</th><th>14318.8⋅10⁶</th></tr>
+            	<tr><th>80</th><th>16371.7⋅10⁶</th></tr>
+            	<tr><th>90</th><th>18414.0⋅10⁶</th></tr>
+            	<tr><th>100</th><th>20446.9⋅10⁶</th></tr>
+            </table>
+        </td>
+    </tr>
+</table>
+
+<table>
+    <tr>
+        <td><img src="https://github.com/user-attachments/assets/c9ff0e55-65f4-4ffb-a8ba-1d3cb1c1be66"/></td>
+        <td>
+            <table>
+            	<tr><th>Repeats</th><th>Cycles</th></tr>
+            	<tr><th>10</th><th>1066.7⋅10⁶</th></tr>
+            	<tr><th>20</th><th>2095.9⋅10⁶</th></tr>
+            	<tr><th>30</th><th>3141.4⋅10⁶</th></tr>
+            	<tr><th>40</th><th>4190.9⋅10⁶</th></tr>
+            	<tr><th>50</th><th>5239.3⋅10⁶</th></tr>
+            	<tr><th>60</th><th>6292.0⋅10⁶</th></tr>
+            	<tr><th>70</th><th>7316.2⋅10⁶</th></tr>
+            	<tr><th>80</th><th>8361.0⋅10⁶</th></tr>
+            	<tr><th>90</th><th>9422.8⋅10⁶</th></tr>
+            	<tr><th>100</th><th>10481.7⋅10⁶</th></tr>
+            </table>
+        </td>
+    </tr>
+</table>
+
+<table>
+    <tr>
+        <td><img src="https://github.com/user-attachments/assets/ff71a65b-9834-4953-94de-826876b6e7ae"/></td>
+        <td>
+            <table>
+            	<tr><th>Repeats</th><th>Cycles</th></tr>
+            	<tr><th>10</th><th>709.7⋅10⁶</th></tr>
+            	<tr><th>20</th><th>1420.4⋅10⁶</th></tr>
+            	<tr><th>30</th><th>2120.8⋅10⁶</th></tr>
+            	<tr><th>40</th><th>2830.0⋅10⁶</th></tr>
+            	<tr><th>50</th><th>3530.3⋅10⁶</th></tr>
+            	<tr><th>60</th><th>4240.4⋅10⁶</th></tr>
+            	<tr><th>70</th><th>4950.2⋅10⁶</th></tr>
+            	<tr><th>80</th><th>5652.5⋅10⁶</th></tr>
+            	<tr><th>90</th><th>6358.9⋅10⁶</th></tr>
+            	<tr><th>100</th><th>7077.9⋅10⁶</th></tr>
+            </table>
+        </td>
+    </tr>
+</table>
 
 ## Обсуждение результатов
 На графиках мы видим, что экспериментальные данные хорошо описываются линейной зависимостью, что
