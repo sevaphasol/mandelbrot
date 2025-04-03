@@ -4,7 +4,7 @@
 
 //==============================================================================
 
-status_t compute_mandelbrot_normal(context_t* ctx, uint32_t runs)
+status_t compute_mandelbrot_baseline(context_t* ctx, uint32_t runs)
 {
     double scale = ctx->scale;
     //--------------------------------------------------------------------------

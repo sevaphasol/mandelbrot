@@ -24,7 +24,7 @@ inline void print_usage()
          "  --alpha<number>      Set alpha (transparency of pixels).\n"
          "  --runs=<number>      Set number of runs in testing mode.\n"
          "  --calc=<number>      Set mode of calculating.\n"
-         "                       0 — NORMAL\n"
+         "                       0 — BASELINE\n"
          "                       1 — SSE\n"
          "                       2 — AVX2\n"
          "                       3 — AVX-512\n"

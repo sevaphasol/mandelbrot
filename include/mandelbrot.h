@@ -29,7 +29,7 @@
 #define TESTING          1
 #define BENCMARK         2
 
-#define NORMAL           0
+#define BASELINE         0
 #define SSE              1
 #define AVX2             2
 #define AVX512           3
@@ -75,33 +75,33 @@ struct test_ctx_t
     double    intercept_error;
 };
 //———————————————————————————————————————————————————————————————————————————————
-status_t   ctx_ctor                  (context_t* ctx);
-status_t   ctx_update                (context_t* ctx);
-status_t   ctx_dtor                  (context_t* ctx);
+status_t   ctx_ctor                    (context_t* ctx);
+status_t   ctx_update                  (context_t* ctx);
+status_t   ctx_dtor                    (context_t* ctx);
 
-status_t   graphic_mode              (context_t* ctx);
-status_t   testing_mode              (context_t* ctx);
-status_t   benchmark_mode            (context_t* ctx);
+status_t   graphic_mode                (context_t* ctx);
+status_t   testing_mode                (context_t* ctx);
+status_t   benchmark_mode              (context_t* ctx);
 
-status_t   compute_pixel_colors      (context_t* ctx);
-sf::Uint32 get_color                 (uint64_t iter, uint8_t alpha);
+status_t   compute_pixel_colors        (context_t* ctx);
+sf::Uint32 get_color                   (uint64_t iter, uint8_t alpha);
 
-status_t   compute_mandelbrot_normal (context_t* ctx, uint32_t runs);
-status_t   compute_mandelbrot_sse    (context_t* ctx, uint32_t runs);
-status_t   compute_mandelbrot_avx2   (context_t* ctx, uint32_t runs);
-status_t   compute_mandelbrot_avx512 (context_t* ctx, uint32_t runs);
+status_t   compute_mandelbrot_baseline (context_t* ctx, uint32_t runs);
+status_t   compute_mandelbrot_sse      (context_t* ctx, uint32_t runs);
+status_t   compute_mandelbrot_avx2     (context_t* ctx, uint32_t runs);
+status_t   compute_mandelbrot_avx512   (context_t* ctx, uint32_t runs);
 
-status_t   handle_events             (context_t* ctx,
-                                      sf::Window& window,
-                                      sf::Event& event);
+status_t   handle_events               (context_t* ctx,
+                                        sf::Window& window,
+                                        sf::Event& event);
 
-status_t   show_stats                (bool mode);
+status_t   show_stats                  (bool mode);
 
-status_t   calc_least_squares        (test_ctx_t* ctx);
-status_t   graphic_plot              (test_ctx_t* ctx, uint32_t mode);
-status_t   set_gnuplot_settings      (test_ctx_t* ctx,
-                                      FILE* gnuplot, const char* plot_name);
-status_t   make_table                (test_ctx_t* ctx, uint32_t mode);
-status_t   show_progress_bar         (uint32_t total, uint32_t current);
+status_t   calc_least_squares          (test_ctx_t* ctx);
+status_t   graphic_plot                (test_ctx_t* ctx, uint32_t mode);
+status_t   set_gnuplot_settings        (test_ctx_t* ctx,
+                                        FILE* gnuplot, const char* plot_name);
+status_t   make_table                  (test_ctx_t* ctx, uint32_t mode);
+status_t   show_progress_bar           (uint32_t total, uint32_t current);
 //———————————————————————————————————————————————————————————————————————————————
 #endif // MANDELBROT_H__

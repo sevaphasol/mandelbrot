@@ -171,8 +171,8 @@ status_t ctx_dtor (context_t* ctx)
 status_t ctx_update(context_t* ctx)
 {
     switch (ctx->argv.calc) {
-        case NORMAL: {
-            compute_mandelbrot_normal(ctx, 1);
+        case BASELINE: {
+            compute_mandelbrot_baseline(ctx, 1);
             break;
         }
         case SSE: {
@@ -260,8 +260,8 @@ status_t testing_mode(context_t* ctx)
     status_t (*compute_func)(context_t* ctx, uint32_t runs) = nullptr;
     //-------------------------------------------------------------------------
     switch (ctx->argv.calc) {
-        case NORMAL: {
-            compute_func = &compute_mandelbrot_normal;
+        case BASELINE: {
+            compute_func = &compute_mandelbrot_baseline;
             break;
         }
         case SSE: {
@@ -373,7 +373,7 @@ status_t make_table(test_ctx_t* ctx, uint32_t mode)
 {
     FILE* table = nullptr;
     switch (mode) {
-        case NORMAL:
+        case BASELINE:
             table = fopen("no-optimization-table.txt", "w");
             break;
         case SSE:
@@ -419,7 +419,7 @@ status_t graphic_plot(test_ctx_t* ctx, uint32_t mode)
     }
     //-------------------------------------------------------------------------
     switch (mode) {
-        case NORMAL:
+        case BASELINE:
             set_gnuplot_settings(ctx, gnuplot, "No optimization");
             break;
         case SSE:
