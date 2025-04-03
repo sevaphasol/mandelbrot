@@ -206,7 +206,9 @@ status_t compute_pixel_colors(context_t* ctx)
 {
     uint8_t alpha = ctx->argv.alpha;
     //-------------------------------------------------------------------------
-    sf::Clock clock;
+    uint32_t elapsed_time;
+    //-------------------------------------------------------------------------
+    static sf::Clock clock;
     //-------------------------------------------------------------------------
     if (ctx->argv.pulsation) {
         uint32_t elapsed_time = clock.getElapsedTime().asMilliseconds();
@@ -374,16 +376,16 @@ status_t make_table(test_ctx_t* ctx, uint32_t mode)
     FILE* table = nullptr;
     switch (mode) {
         case BASELINE:
-            table = fopen("no-optimization-table.txt", "w");
+            table = fopen("baseline.txt", "w");
             break;
         case SSE:
-            table = fopen("sse-table.txt", "w");
+            table = fopen("sse.txt", "w");
             break;
         case AVX2:
-            table = fopen("avx2-table.txt", "w");
+            table = fopen("avx2.txt", "w");
             break;
         case AVX512:
-            table = fopen("avx512-table.txt", "w");
+            table = fopen("avx512.txt", "w");
             break;
         default:
             return ERROR;
@@ -420,16 +422,16 @@ status_t graphic_plot(test_ctx_t* ctx, uint32_t mode)
     //-------------------------------------------------------------------------
     switch (mode) {
         case BASELINE:
-            set_gnuplot_settings(ctx, gnuplot, "No optimization");
+            set_gnuplot_settings(ctx, gnuplot, "BASELINE");
             break;
         case SSE:
-            set_gnuplot_settings(ctx, gnuplot, "SSE optimization");
+            set_gnuplot_settings(ctx, gnuplot, "SSE");
             break;
         case AVX2:
-            set_gnuplot_settings(ctx, gnuplot, "AVX2 optimization");
+            set_gnuplot_settings(ctx, gnuplot, "AVX2");
             break;
         case AVX512:
-            set_gnuplot_settings(ctx, gnuplot, "AVX512 optimization");
+            set_gnuplot_settings(ctx, gnuplot, "AVX512");
             break;
         default:
             return ERROR;

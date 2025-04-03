@@ -100,20 +100,20 @@ taskset -c <core number>
 
 <table>
     <tr>
-        <td><img src="https://github.com/user-attachments/assets/ecac6db8-5b0f-4494-af4a-1acc667c5903"/></td>
+        <td><img src="https://github.com/user-attachments/assets/9faaa748-a012-4261-8f8a-66ad18c216c4"/></td>
         <td>
             <table>
             	<tr><th>Repeats</th><th>Cycles</th></tr>
-            	<tr><th>10</th><th>3862.9⋅10⁶</th></tr>
-            	<tr><th>20</th><th>7688.8⋅10⁶</th></tr>
-            	<tr><th>30</th><th>11491.9⋅10⁶</th></tr>
-            	<tr><th>40</th><th>15373.4⋅10⁶</th></tr>
-            	<tr><th>50</th><th>19273.7⋅10⁶</th></tr>
-            	<tr><th>60</th><th>23025.0⋅10⁶</th></tr>
-            	<tr><th>70</th><th>26952.4⋅10⁶</th></tr>
-            	<tr><th>80</th><th>30792.5⋅10⁶</th></tr>
-            	<tr><th>90</th><th>34677.4⋅10⁶</th></tr>
-            	<tr><th>100</th><th>38366.3⋅10⁶</th></tr>
+            	<tr><th>10</th><th>3843.0⋅10⁶</th></tr>
+            	<tr><th>20</th><th>7693.2⋅10⁶</th></tr>
+            	<tr><th>30</th><th>11493.0⋅10⁶</th></tr>
+            	<tr><th>40</th><th>15312.2⋅10⁶</th></tr>
+            	<tr><th>50</th><th>19239.9⋅10⁶</th></tr>
+            	<tr><th>60</th><th>23032.1⋅10⁶</th></tr>
+            	<tr><th>70</th><th>26964.6⋅10⁶</th></tr>
+            	<tr><th>80</th><th>30808.1⋅10⁶</th></tr>
+            	<tr><th>90</th><th>34613.6⋅10⁶</th></tr>
+            	<tr><th>100</th><th>38490.9⋅10⁶</th></tr>
             </table>
         </td>
     </tr>
@@ -121,20 +121,20 @@ taskset -c <core number>
 
 <table>
     <tr>
-        <td><img src="https://github.com/user-attachments/assets/aa2c9031-9c02-4c38-939b-c3ed2c15c011"/></td>
+        <td><img src="https://github.com/user-attachments/assets/64f52c0f-27d4-40e5-b4bd-1d65cb2efff4"/></td>
         <td>
             <table>
             	<tr><th>Repeats</th><th>Cycles</th></tr>
-            	<tr><th>10</th><th>2044.1⋅10⁶</th></tr>
-            	<tr><th>20</th><th>4058.9⋅10⁶</th></tr>
-            	<tr><th>30</th><th>6099.7⋅10⁶</th></tr>
-            	<tr><th>40</th><th>8184.1⋅10⁶</th></tr>
-            	<tr><th>50</th><th>10236.7⋅10⁶</th></tr>
-            	<tr><th>60</th><th>12252.6⋅10⁶</th></tr>
-            	<tr><th>70</th><th>14318.8⋅10⁶</th></tr>
-            	<tr><th>80</th><th>16371.7⋅10⁶</th></tr>
-            	<tr><th>90</th><th>18414.0⋅10⁶</th></tr>
-            	<tr><th>100</th><th>20446.9⋅10⁶</th></tr>
+            	<tr><th>10</th><th>2057.5⋅10⁶</th></tr>
+            	<tr><th>20</th><th>4078.6⋅10⁶</th></tr>
+            	<tr><th>30</th><th>6135.6⋅10⁶</th></tr>
+            	<tr><th>40</th><th>8197.9⋅10⁶</th></tr>
+            	<tr><th>50</th><th>10210.3⋅10⁶</th></tr>
+            	<tr><th>60</th><th>12256.4⋅10⁶</th></tr>
+            	<tr><th>70</th><th>14285.3⋅10⁶</th></tr>
+            	<tr><th>80</th><th>16347.7⋅10⁶</th></tr>
+            	<tr><th>90</th><th>18378.4⋅10⁶</th></tr>
+            	<tr><th>100</th><th>20435.6⋅10⁶</th></tr>
             </table>
         </td>
     </tr>
@@ -142,20 +142,20 @@ taskset -c <core number>
 
 <table>
     <tr>
-        <td><img src="https://github.com/user-attachments/assets/c9ff0e55-65f4-4ffb-a8ba-1d3cb1c1be66"/></td>
+        <td><img src="https://github.com/user-attachments/assets/13b38472-ac3d-44a3-ad41-65308b06e394"/></td>
         <td>
             <table>
             	<tr><th>Repeats</th><th>Cycles</th></tr>
-            	<tr><th>10</th><th>1066.7⋅10⁶</th></tr>
-            	<tr><th>20</th><th>2095.9⋅10⁶</th></tr>
-            	<tr><th>30</th><th>3141.4⋅10⁶</th></tr>
-            	<tr><th>40</th><th>4190.9⋅10⁶</th></tr>
-            	<tr><th>50</th><th>5239.3⋅10⁶</th></tr>
-            	<tr><th>60</th><th>6292.0⋅10⁶</th></tr>
-            	<tr><th>70</th><th>7316.2⋅10⁶</th></tr>
-            	<tr><th>80</th><th>8361.0⋅10⁶</th></tr>
-            	<tr><th>90</th><th>9422.8⋅10⁶</th></tr>
-            	<tr><th>100</th><th>10481.7⋅10⁶</th></tr>
+            	<tr><th>10</th><th>1056.7⋅10⁶</th></tr>
+            	<tr><th>20</th><th>2099.8⋅10⁶</th></tr>
+            	<tr><th>30</th><th>3137.1⋅10⁶</th></tr>
+            	<tr><th>40</th><th>4187.1⋅10⁶</th></tr>
+            	<tr><th>50</th><th>5243.5⋅10⁶</th></tr>
+            	<tr><th>60</th><th>6279.4⋅10⁶</th></tr>
+            	<tr><th>70</th><th>7327.1⋅10⁶</th></tr>
+            	<tr><th>80</th><th>8385.2⋅10⁶</th></tr>
+            	<tr><th>90</th><th>9416.9⋅10⁶</th></tr>
+            	<tr><th>100</th><th>10466.3⋅10⁶</th></tr>
             </table>
         </td>
     </tr>
@@ -163,22 +163,20 @@ taskset -c <core number>
 
 <table>
     <tr>
-        <td><img src="https://github.com/user-attachments/assets/858beb54-2e45-4372-bcd0-e469b4ead3a1"/></td>
+        <td><img src="https://github.com/user-attachments/assets/72df650b-db1e-400e-bf49-41d3eb273a2a"/></td>
         <td>
             <table>
-                <table>
-                	<tr><th>Repeats</th><th>Cycles</th></tr>
-                	<tr><th>10</th><th>720.7⋅10⁶</th></tr>
-                	<tr><th>20</th><th>1434.2⋅10⁶</th></tr>
-                	<tr><th>30</th><th>2133.1⋅10⁶</th></tr>
-                	<tr><th>40</th><th>2844.0⋅10⁶</th></tr>
-                	<tr><th>50</th><th>3568.8⋅10⁶</th></tr>
-                	<tr><th>60</th><th>4268.6⋅10⁶</th></tr>
-                	<tr><th>70</th><th>4978.0⋅10⁶</th></tr>
-                	<tr><th>80</th><th>5676.4⋅10⁶</th></tr>
-                	<tr><th>90</th><th>6354.0⋅10⁶</th></tr>
-                	<tr><th>100</th><th>7066.1⋅10⁶</th></tr>
-                </table>
+                <tr><th>Repeats</th><th>Cycles</th></tr>
+                <tr><th>10</th><th>714.6⋅10⁶</th></tr>
+                <tr><th>20</th><th>1421.1⋅10⁶</th></tr>
+                <tr><th>30</th><th>2157.6⋅10⁶</th></tr>
+                <tr><th>40</th><th>2887.1⋅10⁶</th></tr>
+                <tr><th>50</th><th>3562.3⋅10⁶</th></tr>
+                <tr><th>60</th><th>4281.5⋅10⁶</th></tr>
+                <tr><th>70</th><th>4973.0⋅10⁶</th></tr>
+                <tr><th>80</th><th>5659.6⋅10⁶</th></tr>
+                <tr><th>90</th><th>6367.3⋅10⁶</th></tr>
+                <tr><th>100</th><th>7071.8⋅10⁶</th></tr>
             </table>
         </td>
     </tr>
@@ -193,14 +191,14 @@ taskset -c <core number>
 
 <table>
     <tr>
-        <td><img src="https://github.com/user-attachments/assets/e46d55dd-e82e-426f-a6b3-e00999179c54"/></td>
+        <td><img src="https://github.com/user-attachments/assets/66ae9a77-7990-4ed0-a4b1-1e22b89fc6ba"/></td>
         <td>
             <table>
             	<tr><th>Реализация</th><th>Количество тактов</th></tr>
-            	<tr><th>BASELINE</th><th>(384.5 ± 0.5)⋅10⁶</th></tr>
-            	<tr><th>SSE</th><th>(204.8 ± 0.2)⋅10⁶</th></tr>
+            	<tr><th>BASELINE</th><th>(385.2 ± 0.4)⋅10⁶</th></tr>
+            	<tr><th>SSE</th><th>(204.2 ± 0.1)⋅10⁶</th></tr>
             	<tr><th>AVX2</th><th>(104.6 ± 0.1)⋅10⁶</th></tr>
-            	<tr><th>AVX512</th><th>(70.5 ± 0.1)⋅10⁶</th></tr>
+            	<tr><th>AVX512</th><th>(70.5 ± 0.2)⋅10⁶</th></tr>
             </table>
         </td>
     </tr>
