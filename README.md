@@ -193,7 +193,7 @@ taskset -c <core number>
 
 <table>
     <tr>
-        <td><img src="https://github.com/user-attachments/assets/5067046a-0ea1-4794-98fb-4a2053413403"/></td>
+        <td><img src="https://github.com/user-attachments/assets/a543d0b0-4ccc-4997-b97d-28f4d9c4af22"/></td>
         <td>
             <table>
             	<tr><th>Реализация</th><th>Количество тактов</th></tr>
