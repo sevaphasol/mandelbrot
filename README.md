@@ -100,20 +100,20 @@ taskset -c <core number>
 
 <table>
     <tr>
-        <td><img src="https://github.com/user-attachments/assets/9faaa748-a012-4261-8f8a-66ad18c216c4"/></td>
+        <td><img src="https://github.com/user-attachments/assets/7084a9e8-f616-416d-9a2c-c64c2de8c04d"/></td>
         <td>
             <table>
             	<tr><th>Repeats</th><th>Cycles</th></tr>
-            	<tr><th>10</th><th>3843.0⋅10⁶</th></tr>
-            	<tr><th>20</th><th>7693.2⋅10⁶</th></tr>
-            	<tr><th>30</th><th>11493.0⋅10⁶</th></tr>
-            	<tr><th>40</th><th>15312.2⋅10⁶</th></tr>
-            	<tr><th>50</th><th>19239.9⋅10⁶</th></tr>
-            	<tr><th>60</th><th>23032.1⋅10⁶</th></tr>
-            	<tr><th>70</th><th>26964.6⋅10⁶</th></tr>
-            	<tr><th>80</th><th>30808.1⋅10⁶</th></tr>
-            	<tr><th>90</th><th>34613.6⋅10⁶</th></tr>
-            	<tr><th>100</th><th>38490.9⋅10⁶</th></tr>
+            	<tr><th>10</th><th>3836.9⋅10⁶</th></tr>
+            	<tr><th>20</th><th>7711.3⋅10⁶</th></tr>
+            	<tr><th>30</th><th>11496.3⋅10⁶</th></tr>
+            	<tr><th>40</th><th>15317.2⋅10⁶</th></tr>
+            	<tr><th>50</th><th>19171.1⋅10⁶</th></tr>
+            	<tr><th>60</th><th>23089.3⋅10⁶</th></tr>
+            	<tr><th>70</th><th>26963.5⋅10⁶</th></tr>
+            	<tr><th>80</th><th>30740.2⋅10⁶</th></tr>
+            	<tr><th>90</th><th>34594.1⋅10⁶</th></tr>
+            	<tr><th>100</th><th>38338.5⋅10⁶</th></tr>
             </table>
         </td>
     </tr>
@@ -185,17 +185,17 @@ taskset -c <core number>
 ## Обсуждение результатов
 Проведённые исследования демонстрируют значительный выигрыш в производительности при использовании SIMD-инструкций для вычисления множества Мандельброта.
 
-- AVX-512 показал наилучшие результаты с ускорением в ~5.5 раза по сравнению с базовой реализацией
+- AVX-512 показал наилучшие результаты с ускорением в ~5.4 раза по сравнению с базовой реализацией
 - AVX2 обеспечил ускорение в ~3.7 раза
 - SSE дал ускорение в ~1.9 раза
 
 <table>
     <tr>
-        <td><img src="https://github.com/user-attachments/assets/66ae9a77-7990-4ed0-a4b1-1e22b89fc6ba"/></td>
+        <td><img src="https://github.com/user-attachments/assets/c27bc5e5-4fdf-4aff-94ad-5d64aca22ca4"/></td>
         <td>
             <table>
             	<tr><th>Реализация</th><th>Количество тактов</th></tr>
-            	<tr><th>BASELINE</th><th>(385.2 ± 0.4)⋅10⁶</th></tr>
+            	<tr><th>BASELINE</th><th>(384.1 ± 0.5)⋅10⁶</th></tr>
             	<tr><th>SSE</th><th>(204.2 ± 0.1)⋅10⁶</th></tr>
             	<tr><th>AVX2</th><th>(104.6 ± 0.1)⋅10⁶</th></tr>
             	<tr><th>AVX512</th><th>(70.5 ± 0.2)⋅10⁶</th></tr>
