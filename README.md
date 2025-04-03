@@ -203,3 +203,7 @@ taskset -c <core number>
         </td>
     </tr>
 </table>
+
+## Использованная литература
+
+1. [Intel® Intrinsics Guide](https://www.intel.com/content/www/us/en/docs/intrinsics-guide/index.html)
