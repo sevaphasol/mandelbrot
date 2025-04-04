@@ -375,6 +375,8 @@ lea rcx, -8192[rsi] вычисляет адрес начала текущей с
 
 Также хотелось бы упомянуть, что [godbolt](https://godbolt.org/) очень удобен для анализа скомпилированного кода. Подсветка соотвествующих частей C-кода и кода на ассемблере значительно упрощает анализ.
 
+![output](https://github.com/user-attachments/assets/e3c96fd3-6964-469a-bb70-253eea276560)
+
 ## Использованная литература
 
 1. [Intel® Intrinsics Guide](https://www.intel.com/content/www/us/en/docs/intrinsics-guide/index.html)
