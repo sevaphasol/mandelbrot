@@ -267,7 +267,7 @@ O2 хорошо оптимизировал инициализацию перем
 Например вычисление y0_start:
 
 **O1:**
-```bash
+```asm
 3.  vmovsd  xmm2, QWORD PTR 24[rdi]         ; xmm2  = scale
 8.  vmulsd  xmm2, xmm2, QWORD PTR .LC2[rip] ; xmm2  = scale * 0.5
 9.  vmovsd  xmm13, QWORD PTR 16[rdi]        ; xmm13 = ctx->center_y
@@ -278,7 +278,7 @@ O2 хорошо оптимизировал инициализацию перем
 Ничего необычного, однако можно заметить, что O1 не особо старается заполнить конвейер, когда это возможно.
 
 **O2**
-```bash
+```asm
 8.  vmovsd xmm5, QWORD PTR .LC2[rip]            ; xmm5  = 0.5
 10. vmovsd xmm12, xmm1, xmm1                    ; xmm12 = scale
 14. vfnmadd213sd xmm12, xmm5, QWORD PTR 16[rdi] ; xmm12 = -(scale * 0.5) + ctx->center_y
@@ -293,7 +293,7 @@ O2 использует инструкцию ```vfnmadd213sd```, которая 
 Вычисление x0_start:
 
 **O1:**
-```bash
+```asm
 12. vmovsd  xmm1, QWORD PTR 8[rdi]          ; xmm1 = cxt->center_x
 13. vsubsd  xmm2, xmm1, xmm2                ; xmm2 = -(scale * 0.5) + ctx->center_x
 14. vaddsd  xmm4, xmm0, xmm0                ; xmm4 = single_dx * 2.0
@@ -305,7 +305,7 @@ O2 использует инструкцию ```vfnmadd213sd```, которая 
 
 ```
 **O2:**
-```bash
+```asm
 6.  vmulsd  xmm0, xmm1, QWORD PTR .LC0[rip]   ; xmm0 = scale / WIDTH = single_dx
 9.  vmulsd  xmm8, xmm0, QWORD PTR .LC7[rip]   ; xmm8 = single_dx * 7.0
 11. vmulsd  xmm3, xmm0, QWORD PTR .LC4[rip]   ; xmm3 = single_dx * 2.0
@@ -328,7 +328,7 @@ O2 использует инструкцию ```vfnmadd213sd```, которая 
 В целом реализация в O1 и O2 практически одинаковая за исключением используемых регистров и одного нюанса. Нюанс заключается в присваивании ```__m512d y = y0;```
 
 **O1:**
-```bash
+```asm
 .L8:
         vmovapd zmm2, zmm6       ; x    = x0
         vmovapd zmm0, zmm11      ; y    = y0
@@ -346,7 +346,7 @@ O2 использует инструкцию ```vfnmadd213sd```, которая 
 сделать ```vmovapd zmm0, zmm8``` в теле **.L8**.
 
 **O2:**
-```bash
+```asm
 .L9:
         lea     rcx, -8192[rsi]  ; xi = 0
         vmovapd zmm6, zmm11      ; x0 = x0_start
