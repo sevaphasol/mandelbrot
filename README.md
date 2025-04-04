@@ -268,21 +268,21 @@ O2 хорошо оптимизировал инициализацию перем
 
 **O1:**
 ```asm
-3.  vmovsd  xmm2, QWORD PTR 24[rdi]         ; xmm2  = scale
-8.  vmulsd  xmm2, xmm2, QWORD PTR .LC2[rip] ; xmm2  = scale * 0.5
-9.  vmovsd  xmm13, QWORD PTR 16[rdi]        ; xmm13 = ctx->center_y
-10. vsubsd  xmm13, xmm13, xmm2              ; xmm13 = ctx->center_y - scale * 0.5
-11. vbroadcastsd zmm13, xmm13               ; zmm13 = y0_start
+3  | vmovsd  xmm2, QWORD PTR 24[rdi]         ; xmm2  = scale
+8  | vmulsd  xmm2, xmm2, QWORD PTR .LC2[rip] ; xmm2  = scale * 0.5
+9  | vmovsd  xmm13, QWORD PTR 16[rdi]        ; xmm13 = ctx->center_y
+10 | vsubsd  xmm13, xmm13, xmm2              ; xmm13 = ctx->center_y - scale * 0.5
+11 | vbroadcastsd zmm13, xmm13               ; zmm13 = y0_start
 ```
 
 Ничего необычного, однако можно заметить, что O1 не особо старается заполнить конвейер, когда это возможно.
 
 **O2**
 ```asm
-8.  vmovsd xmm5, QWORD PTR .LC2[rip]            ; xmm5  = 0.5
-10. vmovsd xmm12, xmm1, xmm1                    ; xmm12 = scale
-14. vfnmadd213sd xmm12, xmm5, QWORD PTR 16[rdi] ; xmm12 = -(scale * 0.5) + ctx->center_y
-22. vbroadcastsd zmm12, xmm12                   ; zmm12 = y0_start
+8  | vmovsd xmm5, QWORD PTR .LC2[rip]            ; xmm5  = 0.5
+10 | vmovsd xmm12, xmm1, xmm1                    ; xmm12 = scale
+14 | vfnmadd213sd xmm12, xmm5, QWORD PTR 16[rdi] ; xmm12 = -(scale * 0.5) + ctx->center_y
+22 | vbroadcastsd zmm12, xmm12                   ; zmm12 = y0_start
 ```
 
 O2 использует инструкцию ```vfnmadd213sd```, которая одновременно умножает и вычитает
@@ -294,28 +294,28 @@ O2 использует инструкцию ```vfnmadd213sd```, которая 
 
 **O1:**
 ```asm
-12. vmovsd  xmm1, QWORD PTR 8[rdi]          ; xmm1 = cxt->center_x
-13. vsubsd  xmm2, xmm1, xmm2                ; xmm2 = -(scale * 0.5) + ctx->center_x
-14. vaddsd  xmm4, xmm0, xmm0                ; xmm4 = single_dx * 2.0
-15. vmulsd  xmm5, xmm0, QWORD PTR .LC3[rip] ; xmm5 = single_dx * 3.0
-16. vmulsd  xmm3, xmm0, QWORD PTR .LC4[rip] ; xmm3 = single_dx * 5.0
-17. vmulsd  xmm6, xmm0, QWORD PTR .LC5[rip] ; xmm6 = single_dx * 6.0
-18. vmulsd  xmm1, xmm0, QWORD PTR .LC6[rip] ; xmm1 = single_dx * 4.0
-19. vmulsd  xmm7, xmm0, QWORD PTR .LC7[rip] ; xmm7 = single_dx * 7.0
+12 | vmovsd  xmm1, QWORD PTR 8[rdi]          ; xmm1 = cxt->center_x
+13 | vsubsd  xmm2, xmm1, xmm2                ; xmm2 = -(scale * 0.5) + ctx->center_x
+14 | vaddsd  xmm4, xmm0, xmm0                ; xmm4 = single_dx * 2.0
+15 | vmulsd  xmm5, xmm0, QWORD PTR .LC3[rip] ; xmm5 = single_dx * 3.0
+16 | vmulsd  xmm3, xmm0, QWORD PTR .LC4[rip] ; xmm3 = single_dx * 5.0
+17 | vmulsd  xmm6, xmm0, QWORD PTR .LC5[rip] ; xmm6 = single_dx * 6.0
+18 | vmulsd  xmm1, xmm0, QWORD PTR .LC6[rip] ; xmm1 = single_dx * 4.0
+19 | vmulsd  xmm7, xmm0, QWORD PTR .LC7[rip] ; xmm7 = single_dx * 7.0
 
 ```
 **O2:**
 ```asm
-6.  vmulsd  xmm0, xmm1, QWORD PTR .LC0[rip]   ; xmm0 = scale / WIDTH = single_dx
-9.  vmulsd  xmm8, xmm0, QWORD PTR .LC7[rip]   ; xmm8 = single_dx * 7.0
-11. vmulsd  xmm3, xmm0, QWORD PTR .LC4[rip]   ; xmm3 = single_dx * 2.0
-12. vfnmadd213sd xmm1, xmm5, QWORD PTR 8[rdi] ; xmm1 = -(scale * 0.5) + ctx->center_x
-13. vmulsd  xmm7, xmm0, QWORD PTR .LC5[rip]   ; xmm7 = single_dx * 6.0
-15. vmulsd  xmm2, xmm0, QWORD PTR .LC6[rip]   ; xmm2 = single_dx * 4.0
-16. vmulsd  xmm6, xmm0, QWORD PTR .LC3[rip]   ; xmm6 = single_dx * 3.0
-17. vaddsd  xmm4, xmm0, xmm0                  ; xmm4 = single_dx * 2.0
-20. vbroadcastsd zmm11, xmm1                  ; xmm1 = -(scale* 0.5) + ctx->center_x
-32. vaddpd  zmm11, zmm11, zmm0                ; zmm1 = x0_start
+6  | vmulsd  xmm0, xmm1, QWORD PTR .LC0[rip]   ; xmm0 = scale / WIDTH = single_dx
+9  | vmulsd  xmm8, xmm0, QWORD PTR .LC7[rip]   ; xmm8 = single_dx * 7.0
+11 | vmulsd  xmm3, xmm0, QWORD PTR .LC4[rip]   ; xmm3 = single_dx * 2.0
+12 | vfnmadd213sd xmm1, xmm5, QWORD PTR 8[rdi] ; xmm1 = -(scale * 0.5) + ctx->center_x
+13 | vmulsd  xmm7, xmm0, QWORD PTR .LC5[rip]   ; xmm7 = single_dx * 6.0
+15 | vmulsd  xmm2, xmm0, QWORD PTR .LC6[rip]   ; xmm2 = single_dx * 4.0
+16 | vmulsd  xmm6, xmm0, QWORD PTR .LC3[rip]   ; xmm6 = single_dx * 3.0
+17 | vaddsd  xmm4, xmm0, xmm0                  ; xmm4 = single_dx * 2.0
+20 | vbroadcastsd zmm11, xmm1                  ; xmm1 = -(scale* 0.5) + ctx->center_x
+32 | vaddpd  zmm11, zmm11, zmm0                ; zmm1 = x0_start
 ```
 
 Ещё один пример как O2 использует быструю инструкцию ```vfnmadd213sd``` и старается заполнить конвейер,
