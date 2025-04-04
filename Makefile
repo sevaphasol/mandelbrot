@@ -4,7 +4,7 @@ CFLAGS = -g -I include -fPIC -Wcast-qual -Wconversion -Wctor-dtor-privacy    		 
          -Wno-missing-field-initializers -Wnon-virtual-dtor -Woverloaded-virtual     \
 		 -Wpointer-arith -Wsign-promo -Wstack-usage=8192 -Wstrict-aliasing           \
 		 -Wstrict-null-sentinel -Wtype-limits -Wwrite-strings -fexceptions -pipe 	 \
-		 -msse -mavx2 -mavx512f -O2  												 \
+		 -msse -mavx2 -mavx512f -O0  												 \
 
 LDFLAGS = -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
 
