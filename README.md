@@ -103,7 +103,7 @@ taskset -c <core number>
 
 <table>
     <tr>
-        <td><img src="https://github.com/user-attachments/assets/7084a9e8-f616-416d-9a2c-c64c2de8c04d"/></td>
+        <td><img src="https://github.com/user-attachments/assets/c810367f-9939-40a3-804a-e78cbad3032f"/></td>
         <td>
             <table>
             	<tr><th>Repeats</th><th>Cycles</th></tr>
